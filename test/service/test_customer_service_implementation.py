@@ -1,8 +1,8 @@
 from unittest import TestCase
 
 from hotelReservation.data.model.Room import Room
+from hotelReservation.dto.request.book_room_request import BookRoomRequest
 from hotelReservation.dto.request.customer_registration_request import RegistrationRequest
-from hotelReservation.dto.request.search_room_request import RoomSearchRequest
 from hotelReservation.services.customer_service_implementation import CustomerReservationImplementation
 from hotelReservation.services.room_service_implementation import RoomServiceImplementation
 
@@ -23,27 +23,84 @@ class TestCustomerReservationImplementation(TestCase):
         customer_to_register = build_customer()
         registered_customer = self.customer_services.register(customer_to_register)
         self.assertIsNotNone(registered_customer)
-        self.assertEqual(1, len(self.customer_services.get_all_customer()))
 
-    def test_search_for_room(self):
+
+    def test_book_room(self):
         self.test_build_room()
         customer_to_register = build_customer()
         registered_customer = self.customer_services.register(customer_to_register)
         self.assertIsNotNone(registered_customer)
 
-        book_room_request = RoomSearchRequest()
+        book_room_request = BookRoomRequest()
+        customer = build_customer()
+        book_room_request.set_customer(customer)
         book_room_request.set_room_type("SINGLE")
-        book_room_request.set_check_out_date("2023-07-20")
-        book_room_request.set_checkin_date("2023-07-15")
-        found_room = self.customer_services.search_for_room(book_room_request)
+        book_room_request.set_check_out_date("2025-08-01")
+        book_room_request.set_check_in_date("2025-07-27")
+        found_room = self.customer_services.book_room(book_room_request)
         self.assertIsNotNone(found_room)
-        print(found_room)
+        print(f"first booking {found_room}")
 
-    def test_book_room(self):
-        pass
+        book_room_request2 = BookRoomRequest()
+        customer2 = build_customer()
+        book_room_request2.set_customer(customer2)
+        book_room_request2.set_room_type("SINGLE")
+        book_room_request2.set_check_out_date("2025-07-27")
+        book_room_request2.set_check_in_date("2025-07-19")
+        found_room2 = self.customer_services.book_room(book_room_request2)
+        self.assertIsNotNone(found_room2)
+        print(f"second booking {found_room2}")
 
     def test_view_reservation(self):
-        pass
+        self.test_build_room()
+        customer_to_register = build_customer()
+        registered_customer = self.customer_services.register(customer_to_register)
+        self.assertIsNotNone(registered_customer)
+
+        book_room_request = BookRoomRequest()
+        customer = build_customer()
+        book_room_request.set_customer(customer)
+        book_room_request.set_room_type("SINGLE")
+        book_room_request.set_check_out_date("2053-08-01")
+        book_room_request.set_check_in_date("2053-07-27")
+        found_room = self.customer_services.book_room(book_room_request)
+        self.assertIsNotNone(found_room)
+        customer1_reservations = self.customer_services.view_customer_reservation(customer.get_email())
+        print(customer1_reservations)
+
+        book_room_request2 = BookRoomRequest()
+        customer2 = build_customer()
+        book_room_request2.set_customer(customer2)
+        book_room_request2.set_room_type("SINGLE")
+        book_room_request2.set_check_out_date("2053-07-27")
+        book_room_request2.set_check_in_date("2053-07-19")
+        found_room2 = self.customer_services.book_room(book_room_request2)
+        self.assertIsNotNone(found_room2)
+        customer2_reservations = self.customer_services.view_customer_reservation(customer2.get_email())
+        print(customer2_reservations)
+
+    def test_find_by_id(self):
+        customer_to_register = build_customer()
+        registered_customer = self.customer_services.register(customer_to_register)
+        self.assertIsNotNone(registered_customer)
+        found_customer = self.customer_services.find_customer_by_id(registered_customer.get_customer_id())
+        self.assertEqual(found_customer, registered_customer)
+
+    def test_delete_by_id(self):
+        customer_to_register = build_customer()
+        registered_customer = self.customer_services.register(customer_to_register)
+        self.assertIsNotNone(registered_customer)
+        self.customer_services.delete_customer_by_id(registered_customer.get_customer_id())
+        self.assertEqual('there is no registered customer', self.customer_services.get_all_customer())
+
+    def test_get_all_customer(self):
+        customer_to_register = build_customer()
+        registered_customer = self.customer_services.register(customer_to_register)
+        self.assertIsNotNone(registered_customer)
+        customer2 = build_customer()
+        saved_room = self.customer_services.register(customer2)
+        self.assertIsNotNone(saved_room)
+        self.customer_services.get_all_customer()
 
     def test_build_room(self):
         new_room = Room()

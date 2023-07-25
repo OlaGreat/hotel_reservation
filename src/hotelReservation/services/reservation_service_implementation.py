@@ -2,7 +2,7 @@ from hotelReservation.data.model.Customer import Customer
 from hotelReservation.data.model.Reservation import Reservation
 from hotelReservation.data.model.Room import Room
 from hotelReservation.data.repositories.hotel_reservation_repository_implementation import \
-    HotelReservationImplementation
+    HotelReservationRepositoryImplementation
 from hotelReservation.dto.request.book_room_request import BookRoomRequest
 from hotelReservation.dto.request.search_room_request import RoomSearchRequest
 from hotelReservation.services.reservation_service import ReservationServices
@@ -10,7 +10,7 @@ from hotelReservation.services.room_service_implementation import RoomServiceImp
 
 
 class ReservationServicesImplementation(ReservationServices):
-    reservation_repo = HotelReservationImplementation()
+    reservation_repo = HotelReservationRepositoryImplementation()
     room_service = RoomServiceImplementation()
 
     def search_for_room(self, search_request: RoomSearchRequest):

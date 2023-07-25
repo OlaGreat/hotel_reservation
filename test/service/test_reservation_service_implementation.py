@@ -16,8 +16,8 @@ def build_booking_request():
     booking_request.set_customer(customer)
 
     booking_request.set_room_type("single")
-    booking_request.set_check_in_date("2023-07-17")
-    booking_request.set_check_out_date("2023-07-20")
+    booking_request.set_check_in_date("2043-07-19")
+    booking_request.set_check_out_date("2043-07-20")
 
     return booking_request
 
@@ -41,7 +41,6 @@ class TestReservationServicesImplementation(TestCase):
         booked_room = self.reservation_service.book_room(self.user_booking_request)
         print(f"first Booking {booked_room} ")
         self.assertIsNotNone(booked_room)
-
         self.test_book_room_2()
 
     def test_create_room(self):
@@ -64,8 +63,8 @@ class TestReservationServicesImplementation(TestCase):
         booking_request2.set_customer(customer1)
 
         booking_request2.set_room_type("single")
-        booking_request2.set_check_in_date("2023-07-21")
-        booking_request2.set_check_out_date("2023-07-22")
+        booking_request2.set_check_in_date("2043-07-21")
+        booking_request2.set_check_out_date("2043-07-22")
 
         reservation2 = self.reservation_service.book_room(booking_request2)
         print(f"SECOND BOOKING {reservation2}")

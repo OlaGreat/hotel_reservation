@@ -5,7 +5,7 @@ from hotelReservation.data.model.Reservation import Reservation
 from hotelReservation.data.repositories.hotel_reservation_repository import HotelReservation
 
 
-class HotelReservationImplementation(HotelReservation):
+class HotelReservationRepositoryImplementation(HotelReservation):
 
     def __init__(self):
         self.reservation_list = []

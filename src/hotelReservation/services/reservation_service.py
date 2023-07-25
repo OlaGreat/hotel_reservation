@@ -8,6 +8,7 @@ class ReservationServices(ABC):
     @abstractmethod
     def search_reservation(self, search_request: RoomSearchRequest):
         pass
+
     @abstractmethod
     def search_for_room(self, search_request: RoomSearchRequest):
         pass
@@ -15,4 +16,3 @@ class ReservationServices(ABC):
     @abstractmethod
     def book_room(self, booking_request: BookRoomRequest):
         pass
-

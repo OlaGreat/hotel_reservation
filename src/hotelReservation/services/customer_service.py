@@ -19,19 +19,17 @@ class CustomerService(ABC):
         pass
 
     @abstractmethod
-    def view_reservation(self):
+    def view_customer_reservation(self, email: str):
         pass
 
     @abstractmethod
-    def find_customer_by_id(self, customer_id):
+    def find_customer_by_id(self, customer_id: int):
         pass
 
     @abstractmethod
-    def delete_customer_by_id(self, customer_id):
+    def delete_customer_by_id(self, customer_id: int):
         pass
 
     @abstractmethod
     def get_all_customer(self):
         pass
-
-

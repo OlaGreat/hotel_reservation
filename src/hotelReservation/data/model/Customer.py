@@ -27,7 +27,7 @@ class Customer:
     def get_email(self):
         return self.email
 
-    def set_reservation(self,reservation: Reservation):
+    def set_reservation(self, reservation: Reservation):
         self.reservation_list.append(reservation)
 
     def get_reservation(self):

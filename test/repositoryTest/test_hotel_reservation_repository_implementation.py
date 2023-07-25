@@ -5,7 +5,7 @@ from hotelReservation.data.model.Customer import Customer
 from hotelReservation.data.model.Reservation import Reservation
 from hotelReservation.data.model.Room import Room
 from hotelReservation.data.repositories.hotel_reservation_repository_implementation import \
-    HotelReservationImplementation
+    HotelReservationRepositoryImplementation
 
 
 def build_reservation():
@@ -28,7 +28,7 @@ def build_reservation():
 
 
 class TestHotelReservationImplementation(TestCase):
-    reservation_repo = HotelReservationImplementation()
+    reservation_repo = HotelReservationRepositoryImplementation()
     reserved = build_reservation()
 
     def test_save_reservation(self):

@@ -41,8 +41,11 @@ class RoomRepositoryImplementation(RoomRepository):
 
     def find_room(self, room_type, check_in_date, check_out_date):
         in_date = datetime.strptime(check_in_date, "%Y-%m-%d")
+        out_date = datetime.strptime(check_out_date, "%Y-%m-%d")
         if in_date < datetime.today():
             raise ValueError(f"date cant be less than {date.today()}")
+        if out_date < in_date:
+            raise ValueError(f"checkin day can not be less than checkout day")
         for room in self.rooms:
             if room.get_room_type() is room_type:
                 if room.get_is_booked() is False:
