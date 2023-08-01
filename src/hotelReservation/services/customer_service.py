@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from hotelReservation.data.model.Customer import Customer
 from hotelReservation.dto.request.book_room_request import BookRoomRequest
 from hotelReservation.dto.request.customer_registration_request import RegistrationRequest
 from hotelReservation.dto.request.search_room_request import RoomSearchRequest
@@ -32,4 +33,8 @@ class CustomerService(ABC):
 
     @abstractmethod
     def get_all_customer(self):
+        pass
+
+    @abstractmethod
+    def get_customer_by_email(self, email:str) -> Customer | None:
         pass

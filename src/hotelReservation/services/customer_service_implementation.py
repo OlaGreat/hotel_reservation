@@ -63,6 +63,8 @@ class CustomerReservationImplementation(CustomerService):
     def get_all_customer(self):
         customer_list = self.customer_repo.get_all_customer()
         if len(customer_list) > 0:
-            for customer in customer_list:
-                print(customer)
+            return customer_list
         return f"there is no registered customer"
+
+    def get_customer_by_email(self, email: str) -> Customer | None:
+        return self.customer_repo.find_by_email(email)

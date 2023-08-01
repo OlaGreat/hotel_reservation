@@ -16,3 +16,8 @@ class ReservationServices(ABC):
     @abstractmethod
     def book_room(self, booking_request: BookRoomRequest):
         pass
+
+    @abstractmethod
+    def get_all_reservation(self):
+        pass
+

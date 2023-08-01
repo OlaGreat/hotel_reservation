@@ -15,3 +15,7 @@ class RoomServices(ABC):
     @abstractmethod
     def delete_room(self, room_id:int):
         pass
+
+    @abstractmethod
+    def get_all_room(self):
+        pass

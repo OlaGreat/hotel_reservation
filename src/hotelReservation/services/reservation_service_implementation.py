@@ -10,6 +10,7 @@ from hotelReservation.services.room_service_implementation import RoomServiceImp
 
 
 class ReservationServicesImplementation(ReservationServices):
+
     reservation_repo = HotelReservationRepositoryImplementation()
     room_service = RoomServiceImplementation()
 
@@ -26,19 +27,10 @@ class ReservationServicesImplementation(ReservationServices):
         search_request.set_check_out_date(booking_request.get_check_out_date())
         found_room = self.search_for_room(search_request)
         if found_room is None:
-            new_found_room = self.reservation_repo.search_reservation(booking_request.get_room_type(),
-                                                                      booking_request.get_check_in_date(),
-                                                                      booking_request.get_check_out_date())
+            new_found_room = self.search_reservation_for_available_room(booking_request)
+
             if new_found_room is not None:
-                new_reservation = Reservation()
-                customer = Customer()
-                customer.set_first_name(booking_request.get_customer().get_first_name())
-                customer.set_last_name(booking_request.get_customer().get_email())
-                customer.set_email(booking_request.get_customer().get_email())
-                new_reservation.set_customer(customer)
-                new_reservation.set_room(new_found_room.get_room())
-                new_reservation.set_check_in_date(booking_request.get_check_in_date())
-                new_reservation.set_check_out_date(booking_request.get_check_out_date())
+                new_reservation = self.map_customer_to_reserved_room(booking_request, new_found_room)
                 reserved = self.reservation_repo.save_reservation(new_reservation)
                 return reserved
             else:
@@ -61,6 +53,27 @@ class ReservationServicesImplementation(ReservationServices):
             new_reservation.set_check_out_date(booking_request.get_check_out_date())
             made_reservation = self.reservation_repo.save_reservation(new_reservation)
             return made_reservation
+
+    def map_customer_to_reserved_room(self, booking_request, new_found_room):
+        new_reservation = Reservation()
+        customer = Customer()
+        customer.set_first_name(booking_request.get_customer().get_first_name())
+        customer.set_last_name(booking_request.get_customer().get_last_name())
+        customer.set_email(booking_request.get_customer().get_email())
+        new_reservation.set_customer(customer)
+        new_reservation.set_room(new_found_room.get_room())
+        new_reservation.set_check_in_date(booking_request.get_check_in_date())
+        new_reservation.set_check_out_date(booking_request.get_check_out_date())
+        return new_reservation
+
+    def search_reservation_for_available_room(self, booking_request):
+        new_found_room = self.reservation_repo.search_reservation(booking_request.get_room_type(),
+                                                                  booking_request.get_check_in_date(),
+                                                                  booking_request.get_check_out_date())
+        return new_found_room
+
+    def get_all_reservation(self):
+        return self.reservation_repo.get_all()
 
     def search_reservation(self, search_request: RoomSearchRequest):
         room_type = search_request.get_room_type()

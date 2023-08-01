@@ -24,7 +24,6 @@ class TestCustomerReservationImplementation(TestCase):
         registered_customer = self.customer_services.register(customer_to_register)
         self.assertIsNotNone(registered_customer)
 
-
     def test_book_room(self):
         self.test_build_room()
         customer_to_register = build_customer()
