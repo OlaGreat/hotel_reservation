@@ -45,6 +45,6 @@ class TestRoomServiceImplementation(TestCase):
         saved_room2 = self.room_serv.save_room(new_room2)
         self.assertIsNotNone(saved_room2)
 
-        found_room = self.room_serv.find_room("SINGLE", "2023-07-20", "2023-07-14")
+        found_room = self.room_serv.find_room("SINGLE", "2033-07-2", "2033-07-14")
         self.assertIsNotNone(found_room)
 
